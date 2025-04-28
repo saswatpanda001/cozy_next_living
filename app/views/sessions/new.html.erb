@@ -1,23 +1,23 @@
 <%= render 'shared/local' %>
-<h1 class="text-3xl font-semibold text-center mb-8 text-gray-800">Login Page</h1>
+<h1 class="pt-16 text-4xl font-extrabold text-center mb-8 text-gray-900">Login Page</h1>
 
-<%= form_with url: login_path, local: true, html: { class: "max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg" } do |f| %>
+<%= form_with url: login_path, local: true, html: { class: "max-w-lg mx-auto bg-white p-10 rounded-lg shadow-2xl" } do |f| %>
   <div class="mb-6">
-    <%= f.label :username, class: "block text-sm font-medium text-gray-700" %>
-    <%= f.text_field :username, required: true, class: "mt-2 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" %>
+    <%= f.label :username, class: "block text-lg font-medium text-gray-800" %>
+    <%= f.text_field :username, required: true, class: "mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" %>
   </div>
 
   <div class="mb-6">
-    <%= f.label :password, class: "block text-sm font-medium text-gray-700" %>
-    <%= f.password_field :password, required: true, class: "mt-2 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" %>
+    <%= f.label :password, class: "block text-lg font-medium text-gray-800" %>
+    <%= f.password_field :password, required: true, class: "mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" %>
   </div>
 
   <div class="mt-6">
-    <%= f.submit "Log In", class: "w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" %>
+    <%= f.submit "Log In", class: "w-full py-3 px-5 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-200" %>
   </div>
 <% end %>
 
-<p class="mt-4 text-center text-sm text-gray-600">
+<p class="mt-6 text-center text-sm text-gray-600">
   Don’t have an account? 
-  <%= link_to 'Sign Up', signup_path, class: "text-indigo-600 hover:text-indigo-700" %>
+  <%= link_to 'Sign Up', signup_path, class: "text-indigo-600 hover:text-indigo-700 font-medium" %>
 </p>

@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
         user = Admin.find_by(username: params[:username])
         
         if user&.authenticate(params[:password])
-          session[:user_id] = user.id
+          session[:admin_id] = user.id
           
           respond_to do |format|
             if user.administrator?
