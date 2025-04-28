@@ -1,0 +1,72 @@
+<%= render 'shared/local' %>
+
+<!-- Hero Section -->
+<section class="relative bg-gray-900 text-white">
+  <div class="absolute inset-0">
+    <!-- Replace with your actual hero image -->
+    <img class="w-full h-full object-cover opacity-50" src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Cozy living room">
+  </div>
+  <div class="relative max-w-7xl mx-auto px-4 py-32 sm:px-6 lg:px-8">
+    <div class="text-center">
+      <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
+        Create Your Perfect Home
+      </h1>
+      <p class="mt-6 text-xl max-w-3xl mx-auto">
+        Discover handcrafted furniture and decor that transforms your house into a cozy nest.
+      </p>
+      <div class="mt-10">
+        <%= link_to "Shop Now", products_path, class: "inline-block px-8 py-3 border border-transparent text-base font-medium rounded-md text-gray-900 bg-white hover:bg-gray-100 md:py-4 md:text-lg md:px-10" %>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Categories -->
+<section class="py-12 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl font-extrabold text-gray-900 mb-8 text-center">Shop by Category</h2>
+    <div class="grid grid-cols-1 gap-y-6 sm:grid-cols-2 gap-x-6 lg:grid-cols-4">
+    </div>
+  </div>
+</section>
+
+<!-- Page Content -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <div class="prose prose-lg max-w-none">
+    <h1><%= @page.title %></h1>
+    
+    <% if @page.about_description1.present? %>
+      <div class="mb-8">
+        <%= simple_format @page.about_description1 %>
+      </div>
+    <% end %>
+
+    <% if @page.about_description2.present? %>
+      <div class="mt-8 pt-8 border-t border-gray-200">
+        <%= simple_format @page.about_description2 %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<!-- Testimonials -->
+<section class="py-12 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl font-extrabold text-gray-900 mb-8 text-center">What Our Customers Say</h2>
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+      <div class="bg-gray-50 p-6 rounded-lg shadow">
+        <div class="flex items-center mb-4">
+          <div class="w-12 h-12 rounded-full bg-gray-300 mr-4"></div>
+          <div>
+            <h4 class="font-medium text-gray-900">Sarah Johnson</h4>
+            <p class="text-gray-500">Homeowner</p>
+          </div>
+        </div>
+        <p class="text-gray-600">"The quality of furniture from Cozy Nest Living is exceptional. My living room has never looked better!"</p>
+      </div>
+      <!-- More testimonials... -->
+    </div>
+  </div>
+</section>
+
+<%= render 'shared/navbar' %>

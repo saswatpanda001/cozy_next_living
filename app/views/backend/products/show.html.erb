@@ -1,0 +1,91 @@
+<%= render 'shared/navbar1' %>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+    <div class="px-4 py-5 sm:px-6 border-b border-gray-200">
+      <h1 class="text-3xl font-bold text-gray-900"><%= @product.name %></h1>
+    </div>
+
+    <div class="px-4 py-5 sm:p-6">
+      <div class="flex flex-col md:flex-row gap-8">
+        <!-- Image Section -->
+        <div class="w-full md:w-1/3">
+          <% if @product.image.attached? %>
+            <div class="bg-white rounded-lg overflow-hidden shadow">
+              <%= image_tag @product.image, class: "w-full h-auto object-cover" %>
+            </div>
+          <% else %>
+            <div class="bg-gray-100 rounded-lg shadow flex items-center justify-center" style="height: 300px;">
+              <div class="text-center p-6">
+                <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <h3 class="mt-2 text-sm font-medium text-gray-900">No image</h3>
+                <p class="mt-1 text-sm text-gray-500">This product doesn't have an image yet.</p>
+              </div>
+            </div>
+          <% end %>
+        </div>
+
+        <!-- Details Section -->
+        <div class="w-full md:w-2/3">
+          <div class="space-y-4">
+            <div>
+              <h3 class="text-lg font-medium text-gray-900">Description</h3>
+              <div class="mt-1 text-gray-600">
+                <%= @product.description.presence || 'No description available' %>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <h3 class="text-lg font-medium text-gray-900">Price</h3>
+                <div class="mt-1 text-gray-600">
+                  <%= number_to_currency(@product.price) %>
+                </div>
+              </div>
+
+              <div>
+                <h3 class="text-lg font-medium text-gray-900">Category</h3>
+                <div class="mt-1 text-gray-600">
+                  <%= @product.category.name %>
+                </div>
+              </div>
+
+              <div>
+                <h3 class="text-lg font-medium text-gray-900">On Sale</h3>
+                <div class="mt-1">
+                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full <%= @product.on_sale ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800' %>">
+                    <%= @product.on_sale ? 'Yes' : 'No' %>
+                  </span>
+                </div>
+              </div>
+
+              <div>
+                <h3 class="text-lg font-medium text-gray-900">New Arrival</h3>
+                <div class="mt-1">
+                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full <%= @product.new_arrival ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800' %>">
+                    <%= @product.new_arrival ? 'Yes' : 'No' %>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="mt-8 flex flex-wrap gap-3">
+            <%= link_to 'Edit Product', edit_backend_product_path(@product), 
+                class: 'inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500' %>
+            
+            <%= link_to 'Back to Products', backend_products_path, 
+                class: 'inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500' %>
+            
+            <%= link_to 'Delete Product', backend_product_path(@product), method: :delete,
+                data: { confirm: 'Are you sure you want to delete this product?' },
+                class: 'inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,61 @@
+<%= form_with(model: [:backend, @product], local: true, html: { multipart: true }) do |form| %>
+  <% if @product.errors.any? %>
+    <div class="bg-red-100 border border-red-400 text-red-700 p-4 rounded mb-4">
+      <h4 class="font-semibold"><%= pluralize(@product.errors.count, "error") %> prohibited this product from being saved:</h4>
+      <ul class="list-disc pl-5">
+        <% @product.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-4">
+    <%= form.label :name, class: 'block text-sm font-medium text-gray-700' %>
+    <%= form.text_field :name, class: 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500' %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.label :description, class: 'block text-sm font-medium text-gray-700' %>
+    <%= form.text_area :description, class: 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500' %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.label :price, class: 'block text-sm font-medium text-gray-700' %>
+    <%= form.number_field :price, step: 0.01, class: 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500' %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.label :category_id, class: 'block text-sm font-medium text-gray-700' %>
+    <%= form.collection_select :category_id, @categories, :id, :name, 
+                              { prompt: 'Select a category' }, class: 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500' %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.label :image, class: 'block text-sm font-medium text-gray-700' %>
+    <%= form.file_field :image, class: 'mt-1 block w-full text-sm text-gray-500 file:py-2 file:px-4 file:border file:border-gray-300 file:rounded-md file:text-sm file:bg-gray-50 file:text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500' %>
+    <% if @product.persisted? && @product.image.attached? %>
+      <div class="mt-2">
+        <%= image_tag @product.image, style: 'max-width: 200px;' %>
+        <div class="mt-2">
+          <%= form.check_box :remove_image, class: 'form-check-input' %>
+          <%= form.label :remove_image, 'Remove image', class: 'form-check-label text-sm text-gray-700' %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mb-4 flex items-center">
+    <%= form.check_box :on_sale, class: 'mr-2 leading-tight' %>
+    <%= form.label :on_sale, 'On Sale', class: 'text-sm text-gray-700' %>
+  </div>
+
+  <div class="mb-6 flex items-center">
+    <%= form.check_box :new_arrival, class: 'mr-2 leading-tight' %>
+    <%= form.label :new_arrival, 'New Arrival', class: 'text-sm text-gray-700' %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.submit class: 'w-full py-2 px-4 bg-blue-500 text-white rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50' %>
+  </div>
+<% end %>

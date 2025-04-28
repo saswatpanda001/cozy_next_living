@@ -1,0 +1,48 @@
+<nav class="bg-white shadow-lg" x-data="{ open: false }">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="flex justify-between">
+      <div class="flex space-x-7">
+        <!-- Logo -->
+        <div>
+          <a href="/" class="flex items-center py-4 px-2">
+            <span class="font-semibold text-gray-900 text-2xl">Cozy Nest Living</span>
+          </a>
+        </div>
+        <!-- Primary Nav -->
+        <div class="hidden md:flex items-center space-x-1">
+        
+          <%= link_to "Products", backend_products_path, class: "py-4 px-2 text-gray-700 hover:text-gray-900 font-medium" %>
+          <%= link_to "Pages", backend_pages_path , class: "py-4 px-2 text-gray-700 hover:text-gray-900 font-medium" %>
+           <%= link_to "Logout", login_path, class: "py-4 px-2 text-gray-700 hover:text-gray-900 font-medium" %>
+
+
+          <%= link_to cart_path, class: "text-gray-700 hover:text-gray-900" do %>
+            <div class="relative">
+              <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+              </svg>
+              <% if cart_items_count > 0 %>
+                <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                  <%= cart_items_count %>
+                </span>
+              <% end %>
+            </div>
+          <% end %>
+          
+        </div>
+      </div>
+      <!-- Secondary Nav -->
+     
+      <!-- Mobile button -->
+      <div class="md:hidden flex items-center">
+        <button @click="open = !open" class="outline-none mobile-menu-button">
+          <svg class="w-6 h-6 text-gray-700" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+            <path d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  
+</nav>

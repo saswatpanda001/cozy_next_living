@@ -1,0 +1,115 @@
+<%= render 'shared/navbar' %>
+
+<div class="container mx-auto px-4 py-8 max-w-4xl">
+  <h1 class="text-3xl font-bold text-gray-800 mb-8">Checkout</h1>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <!-- Order Form -->
+    <div class="bg-white shadow rounded-lg p-6">
+      <%= form_with(model: @order, url: checkout_index_path, local: true, html: { class: "space-y-6" }) do |form| %>
+        <% if @order.errors.any? %>
+          <div id="error_explanation" class="bg-red-50 border-l-4 border-red-500 p-4 mb-6">
+            <h2 class="text-red-700 font-medium mb-2">
+              <%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:
+            </h2>
+            <ul class="list-disc pl-5 text-red-700">
+              <% @order.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <!-- Address Field -->
+        <div class="space-y-2">
+          <%= form.label :address, class: "block text-sm font-medium text-gray-700" %>
+          <%= form.text_area :address, required: true, 
+                class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm",
+                rows: 3 %>
+        </div>
+
+        <!-- Payment Method -->
+        <div class="space-y-2">
+          <%= form.label :payment_method, class: "block text-sm font-medium text-gray-700" %>
+          <%= form.select :payment_method, ['Credit Card', 'PayPal', 'Bank Transfer'], 
+                { prompt: "Select Payment Method" }, 
+                { required: true, 
+                  class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" } %>
+        </div>
+
+        <div class="pt-4">
+          <%= form.submit "Place Order", 
+                class: "w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Order Summary -->
+    <div class="bg-white shadow rounded-lg p-6 h-fit">
+      <h3 class="text-lg font-medium text-gray-900 mb-4">Order Summary</h3>
+      <div class="text-sm text-gray-500 mb-4">
+        Taxes calculated for: <span class="font-medium"><%= current_admin.province.name %></span>
+      </div>
+      
+      <div class="divide-y divide-gray-200">
+        <% @cart.items.each do |item| %>
+          <% product = Product.find(item['product_id']) %>
+          <div class="py-4 flex justify-between">
+            <div class="flex items-center">
+              <div class="ml-4">
+                <div class="text-sm font-medium text-gray-900"><%= product.name %></div>
+                <div class="text-sm text-gray-500">Qty: <%= item['quantity'] %></div>
+              </div>
+            </div>
+            <div class="text-sm font-medium text-gray-900">
+              <%= number_to_currency(product.price * item['quantity']) %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <% if @province && @taxes %>
+      <div class="border-t border-gray-200 pt-4 mt-4 space-y-3">
+        <div class="flex justify-between text-base font-medium text-gray-900">
+          <span>Subtotal</span>
+          <span><%= number_to_currency(@subtotal) %></span>
+        </div>
+    
+        <% if @taxes[:gst] > 0 %>
+          <div class="flex justify-between text-sm text-gray-600">
+            <span>GST (<%= number_to_percentage(@province.gst, precision: 2) %>)</span>
+            <span><%= number_to_currency(@taxes[:gst]) %></span>
+          </div>
+        <% end %>
+    
+        <% if @taxes[:pst] > 0 %>
+          <div class="flex justify-between text-sm text-gray-600">
+            <span>PST (<%= number_to_percentage(@province.pst, precision: 2) %>)</span>
+            <span><%= number_to_currency(@taxes[:pst]) %></span>
+          </div>
+        <% end %>
+    
+        <% if @taxes[:hst] > 0 %>
+          <div class="flex justify-between text-sm text-gray-600">
+            <span>HST (<%= number_to_percentage(@province.hst, precision: 2) %>)</span>
+            <span><%= number_to_currency(@taxes[:hst]) %></span>
+          </div>
+        <% end %>
+    
+        <div class="flex justify-between text-sm text-gray-600 pt-2 border-t border-gray-200 mt-2">
+          <span>Total Tax</span>
+          <span><%= number_to_currency(@taxes[:total]) %></span>
+        </div>
+    
+        <div class="flex justify-between text-lg font-bold text-gray-900 pt-2 border-t border-gray-200 mt-2">
+  <span>Total</span>
+  <span><%= number_to_currency(@subtotal + @taxes[:total]) %></span>
+</div>
+      </div>
+    <% end %>
+
+
+
+    </div>
+  </div>
+</div>

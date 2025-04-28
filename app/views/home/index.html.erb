@@ -1,0 +1,98 @@
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<%= render 'shared/local' %>
+<!-- Hero Section -->
+<section class="relative bg-gray-900 text-white">
+  <div class="absolute inset-0">
+    <!-- Replace with your actual hero image -->
+    <img class="w-full h-full object-cover opacity-50" src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Cozy living room">
+  </div>
+  <div class="relative max-w-7xl mx-auto px-4 py-32 sm:px-6 lg:px-8">
+    <div class="text-center">
+      <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
+        Create Your Perfect Home
+      </h1>
+      <p class="mt-6 text-xl max-w-3xl mx-auto">
+        Discover handcrafted furniture and decor that transforms your house into a cozy nest.
+      </p>
+      <div class="mt-10">
+        <%= link_to "Shop Now", products_path, class: "inline-block px-8 py-3 border border-transparent text-base font-medium rounded-md text-gray-900 bg-white hover:bg-gray-100 md:py-4 md:text-lg md:px-10" %>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Categories -->
+<section class="py-12 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl font-extrabold text-gray-900 mb-8 text-center">Shop by Category</h2>
+    <div class="grid grid-cols-1 gap-y-6 sm:grid-cols-2 gap-x-6 lg:grid-cols-4">
+      <% @categories.each do |category| %>
+        <div class="group relative">
+          <div class="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
+            <!-- Replace with category image -->
+            <img src="https://images.unsplash.com/photo-1556911220-bff31c812dba?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="w-full h-full object-center object-cover lg:w-full lg:h-full">
+          </div>
+          <div class="mt-4 flex justify-between">
+            <div>
+              <h3 class="text-lg text-gray-700">
+                <%= link_to category.name, category_path(category), class: "hover:text-gray-900" %>
+              </h3>
+              <p class="mt-1 text-sm text-gray-500"><%= category.products.count %> items</p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Products -->
+<section class="py-12 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl font-extrabold text-gray-900 mb-8 text-center">New Arrivals</h2>
+    <div class="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-4">
+      <% @new_arrivals.each do |product| %>
+        <div class="group relative bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+          <div class="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
+            <!-- Replace with product image -->
+            <img src="https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="w-full h-full object-center object-cover lg:w-full lg:h-full">
+          </div>
+          <div class="mt-4">
+            <h3 class="text-lg text-gray-700">
+              <%= link_to product.name, product_path(product), class: "hover:text-gray-900" %>
+            </h3>
+            <div class="mt-2 flex justify-between items-center">
+              <p class="text-lg font-medium text-gray-900"><%= number_to_currency(product.price) %></p>
+              <% if product.on_sale? %>
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">Sale</span>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="mt-10 text-center">
+      <%= link_to "View All Products", products_path, class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700" %>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="py-12 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl font-extrabold text-gray-900 mb-8 text-center">What Our Customers Say</h2>
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+      <div class="bg-gray-50 p-6 rounded-lg shadow">
+        <div class="flex items-center mb-4">
+          <div class="w-12 h-12 rounded-full bg-gray-300 mr-4"></div>
+          <div>
+            <h4 class="font-medium text-gray-900">Sarah Johnson</h4>
+            <p class="text-gray-500">Homeowner</p>
+          </div>
+        </div>
+        <p class="text-gray-600">"The quality of furniture from Cozy Nest Living is exceptional. My living room has never looked better!"</p>
+      </div>
+      <!-- More testimonials... -->
+    </div>
+  </div>
+</section>

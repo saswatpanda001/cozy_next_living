@@ -1,0 +1,73 @@
+
+<%= render 'shared/navbar' %>
+
+<!-- app/views/products/show.html.erb -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="lg:grid lg:grid-cols-2 lg:gap-8">
+    <!-- Product Images -->
+    <div class="mb-8 lg:mb-0">
+      <% if @product.image.attached? %>
+        <div class="bg-white rounded-lg shadow overflow-hidden">
+          <%= image_tag @product.image.variant(resize_to_limit: [800, 800]), class: "w-full h-auto" %>
+        </div>
+      <% else %>
+        <div class="bg-gray-200 rounded-lg flex items-center justify-center h-64">
+          <span class="text-gray-400">No image available</span>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Product Details -->
+    <div>
+      <h1 class="text-3xl font-bold text-gray-900"><%= @product.name %></h1>
+      
+      <div class="mt-4 flex items-center">
+        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+          <%= @product.category.name %>
+        </span>
+        <% if @product.on_sale? %>
+          <span class="ml-2 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+            On Sale
+          </span>
+        <% end %>
+      </div>
+
+      <p class="mt-4 text-3xl text-gray-900"><%= number_to_currency(@product.price) %></p>
+
+      <div class="mt-6">
+        <h2 class="text-lg font-medium text-gray-900">Description</h2>
+        <p class="mt-2 text-gray-600"><%= @product.description %></p>
+      </div>
+
+      <!-- Add to Cart Button (if you have cart functionality) -->
+      <div class="mt-8">
+     <%= form_with url: add_item_cart_path, method: :post do |f| %>
+        <%= f.hidden_field :product_id, value: @product.id %>
+        <div class="flex items-center space-x-4">
+          <div class="flex items-center">
+            <%= f.label :quantity, "Qty:", class: "mr-2 text-sm font-medium text-gray-700" %>
+            <%= f.number_field :quantity, value: 1, min: 1, class: "w-16 border border-gray-300 rounded-md py-2 px-3 text-sm" %>
+          </div>
+          <%= f.submit "Add to cart", 
+               class: "flex-1 bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+        </div>
+      <% end %>
+    </div>
+
+
+
+    </div>
+  </div>
+
+  <!-- Related Products -->
+  <% if @related_products.any? %>
+    <div class="mt-16">
+      <h2 class="text-2xl font-bold text-gray-900 mb-6">Related Products</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <% @related_products.each do |product| %>
+          <%= render 'product_card', product: product %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>
